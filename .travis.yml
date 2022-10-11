@@ -14,3 +14,10 @@ after_success:
   - docker build -t jagoncalves/multi-nginx ./nginx
   - docker build -t jagoncalves/multi-server ./server
   - docker build -t jagoncalves/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push jagoncalves/multi-client
+  - docker push jagoncalves/multi-nginx
+  - docker push jagoncalves/multi-server
+  - docker push jagoncalves/multi-worker
