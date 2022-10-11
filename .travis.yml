@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jagoncalves/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true jagoncalves/react-test npm test
+
+after_success:
+  - docker build -t jagoncalves/multi-client ./client
+  - docker build -t jagoncalves/multi-nginx ./nginx
+  - docker build -t jagoncalves/multi-server ./server
+  - docker build -t jagoncalves/multi-worker ./worker
